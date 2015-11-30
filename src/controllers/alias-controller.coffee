@@ -9,10 +9,20 @@ class AliasController
 
   find: (req, res) =>
     {name} = req.params
-    @aliasService.find {name}, (error, alias) =>
+
+    onFind = (error, alias) =>
       return res.status(error.status).send error.messsage if error?.status?
       return res.status(500).send error.message if error?
       res.status(200).send(alias)
+
+    if req.query.name
+      alias = name
+      {name} = req.query
+      @subAliasService.find {alias,name}, onFind
+
+    else
+      @aliasService.find {name}, onFind
+
 
   delete: (req, res) =>
     {name} = req.params

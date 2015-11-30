@@ -42,6 +42,16 @@ class SubAliasService
         return callback error if error?
         callback()
 
+  find: ({alias,name}, callback) =>
+    query =
+      name: alias
+      'subaliases.name': name
+
+    @datastore.findOne query, (error, response) =>
+      return callback @userError 404, http.STATUS_CODES[404] if _.isEmpty response
+      return callback error if error?
+      callback null, _.find response.subaliases, {name}
+
   update: ({alias,name,owner}, {uuid}, callback) =>
     return callback @userError 422 unless @_valid {name,uuid,owner}
 
