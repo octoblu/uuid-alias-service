@@ -32,7 +32,7 @@ describe 'GET /aliases/poor-trunk-ventilation', ->
 
   beforeEach ->
     @whoamiHandler = @meshblu.get('/v2/whoami')
-      .reply(200, '{"uuid": "user-uuid"}')
+      .reply(200, '{"uuid": "899801b3-e877-4c69-93db-89bd9787ceea"}')
 
   beforeEach (done) ->
     @datastore = new Datastore
@@ -46,12 +46,12 @@ describe 'GET /aliases/poor-trunk-ventilation', ->
   context 'when the alias exists', ->
     context 'an ascii name', ->
       beforeEach (done) ->
-        @datastore.insert name: 'poor-trunk-ventilation', uuid: '21560426-7338-450d-ab10-e477ef1908a6', owner: 'user-uuid', (error, @alias) =>
+        @datastore.insert name: 'poor-trunk-ventilation', uuid: '21560426-7338-450d-ab10-e477ef1908a6', owner: '899801b3-e877-4c69-93db-89bd9787ceea', (error, @alias) =>
           done error
 
       beforeEach (done) ->
         auth =
-          username: 'user-uuid'
+          username: '899801b3-e877-4c69-93db-89bd9787ceea'
           password: 'user-token'
 
         options =
@@ -68,16 +68,16 @@ describe 'GET /aliases/poor-trunk-ventilation', ->
         expect(@response.statusCode).to.equal 200
 
       it 'return an alias', ->
-        expect(@body).to.contain name: 'poor-trunk-ventilation', uuid: '21560426-7338-450d-ab10-e477ef1908a6', owner: 'user-uuid'
+        expect(@body).to.contain name: 'poor-trunk-ventilation', uuid: '21560426-7338-450d-ab10-e477ef1908a6', owner: '899801b3-e877-4c69-93db-89bd9787ceea'
 
     context 'a unicode name', ->
       beforeEach (done) ->
-        @datastore.insert name: '💩', uuid: '4fac613f-fea4-49b6-8c0a-715d15d21120', owner: 'user-uuid', (error, @alias) =>
+        @datastore.insert name: '💩', uuid: '4fac613f-fea4-49b6-8c0a-715d15d21120', owner: '899801b3-e877-4c69-93db-89bd9787ceea', (error, @alias) =>
           done error
 
       beforeEach (done) ->
         auth =
-          username: 'user-uuid'
+          username: '899801b3-e877-4c69-93db-89bd9787ceea'
           password: 'user-token'
 
         options =
@@ -96,12 +96,12 @@ describe 'GET /aliases/poor-trunk-ventilation', ->
         expect(@response.statusCode).to.equal 200
 
       it 'return an alias', ->
-        expect(@body).to.contain name: '💩', uuid: '4fac613f-fea4-49b6-8c0a-715d15d21120', owner: 'user-uuid'
+        expect(@body).to.contain name: '💩', uuid: '4fac613f-fea4-49b6-8c0a-715d15d21120', owner: '899801b3-e877-4c69-93db-89bd9787ceea'
 
   context 'when the alias does not exists', ->
     beforeEach (done) ->
       auth =
-        username: 'user-uuid'
+        username: '899801b3-e877-4c69-93db-89bd9787ceea'
         password: 'user-token'
 
       options =

@@ -31,7 +31,7 @@ describe 'POST /aliases', ->
 
   beforeEach ->
     @whoamiHandler = @meshblu.get('/v2/whoami')
-      .reply(200, '{"uuid": "user-uuid"}')
+      .reply(200, '{"uuid": "899801b3-e877-4c69-93db-89bd9787ceea"}')
 
   beforeEach (done) ->
     @datastore = new Datastore
@@ -46,7 +46,7 @@ describe 'POST /aliases', ->
     context 'an ascii name', ->
       beforeEach (done) ->
         auth =
-          username: 'user-uuid'
+          username: '899801b3-e877-4c69-93db-89bd9787ceea'
           password: 'user-token'
 
         alias =
@@ -71,12 +71,12 @@ describe 'POST /aliases', ->
         expect(@response.statusCode).to.equal 201
 
       it 'create an alias in mongo', ->
-        expect(@alias).to.contain name: 'premature-burial', uuid: 'b38d4757-6f91-4aee-8ffb-ff53abc796a2', owner: 'user-uuid'
+        expect(@alias).to.contain name: 'premature-burial', uuid: 'b38d4757-6f91-4aee-8ffb-ff53abc796a2', owner: '899801b3-e877-4c69-93db-89bd9787ceea'
 
     context 'a unicode name', ->
       beforeEach (done) ->
         auth =
-          username: 'user-uuid'
+          username: '899801b3-e877-4c69-93db-89bd9787ceea'
           password: 'user-token'
 
         alias =
@@ -101,13 +101,13 @@ describe 'POST /aliases', ->
         expect(@response.statusCode).to.equal 201
 
       it 'create an alias in mongo', ->
-        expect(@alias).to.contain name: '☃', uuid: 'b38d4757-6f91-4aee-8ffb-ff53abc796a2', owner: 'user-uuid'
+        expect(@alias).to.contain name: '☃', uuid: 'b38d4757-6f91-4aee-8ffb-ff53abc796a2', owner: '899801b3-e877-4c69-93db-89bd9787ceea'
 
   context 'when given an invalid alias', ->
     context 'when given a UUID as a name', ->
       beforeEach (done) ->
         auth =
-          username: 'user-uuid'
+          username: '899801b3-e877-4c69-93db-89bd9787ceea'
           password: 'user-token'
 
         alias =
@@ -137,7 +137,7 @@ describe 'POST /aliases', ->
     context 'when given an empty name', ->
       beforeEach (done) ->
         auth =
-          username: 'user-uuid'
+          username: '899801b3-e877-4c69-93db-89bd9787ceea'
           password: 'user-token'
 
         alias =
@@ -167,7 +167,7 @@ describe 'POST /aliases', ->
     context 'when given an empty uuid', ->
       beforeEach (done) ->
         auth =
-          username: 'user-uuid'
+          username: '899801b3-e877-4c69-93db-89bd9787ceea'
           password: 'user-token'
 
         alias =
@@ -197,7 +197,7 @@ describe 'POST /aliases', ->
     context 'when given non-uuid as the uuid', ->
       beforeEach (done) ->
         auth =
-          username: 'user-uuid'
+          username: '899801b3-e877-4c69-93db-89bd9787ceea'
           password: 'user-token'
 
         alias =

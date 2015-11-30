@@ -57,6 +57,7 @@ class AliasService
     return false if _.isEmpty uuid
     return false if UUID_REGEX.test name
     return false unless UUID_REGEX.test uuid
+    return false unless UUID_REGEX.test owner
     true
 
 module.exports = AliasService

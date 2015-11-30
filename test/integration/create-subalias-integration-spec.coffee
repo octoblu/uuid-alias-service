@@ -31,7 +31,7 @@ describe 'POST /aliases/chloroform', ->
 
   beforeEach ->
     @whoamiHandler = @meshblu.get('/v2/whoami')
-      .reply(200, '{"uuid": "user-uuid"}')
+      .reply(200, '{"uuid": "899801b3-e877-4c69-93db-89bd9787ceea"}')
 
   beforeEach (done) ->
     @datastore = new Datastore
@@ -45,13 +45,13 @@ describe 'POST /aliases/chloroform', ->
   context 'when given a valid sub alias', ->
     context 'when the alias exists', ->
       beforeEach (done) ->
-        @datastore.insert name: 'chloroform', uuid: '21560426-7338-450d-ab10-e477ef1908a6', owner: 'user-uuid', subaliases: [], (error, @alias) =>
+        @datastore.insert name: 'chloroform', uuid: '21560426-7338-450d-ab10-e477ef1908a6', owner: '899801b3-e877-4c69-93db-89bd9787ceea', subaliases: [], (error, @alias) =>
           done error
 
       context 'an ascii name', ->
         beforeEach (done) ->
           auth =
-            username: 'user-uuid'
+            username: '899801b3-e877-4c69-93db-89bd9787ceea'
             password: 'user-token'
 
           alias =
@@ -81,7 +81,7 @@ describe 'POST /aliases/chloroform', ->
       context 'a unicode name', ->
         beforeEach (done) ->
           auth =
-            username: 'user-uuid'
+            username: '899801b3-e877-4c69-93db-89bd9787ceea'
             password: 'user-token'
 
           alias =
@@ -112,7 +112,7 @@ describe 'POST /aliases/chloroform', ->
         context 'when given a UUID as a name', ->
           beforeEach (done) ->
             auth =
-              username: 'user-uuid'
+              username: '899801b3-e877-4c69-93db-89bd9787ceea'
               password: 'user-token'
 
             alias =
@@ -142,7 +142,7 @@ describe 'POST /aliases/chloroform', ->
         context 'when given an empty name', ->
           beforeEach (done) ->
             auth =
-              username: 'user-uuid'
+              username: '899801b3-e877-4c69-93db-89bd9787ceea'
               password: 'user-token'
 
             alias =
@@ -172,7 +172,7 @@ describe 'POST /aliases/chloroform', ->
         context 'when given an empty uuid', ->
           beforeEach (done) ->
             auth =
-              username: 'user-uuid'
+              username: '899801b3-e877-4c69-93db-89bd9787ceea'
               password: 'user-token'
 
             alias =
@@ -202,7 +202,7 @@ describe 'POST /aliases/chloroform', ->
         context 'when given non-uuid as the uuid', ->
           beforeEach (done) ->
             auth =
-              username: 'user-uuid'
+              username: '899801b3-e877-4c69-93db-89bd9787ceea'
               password: 'user-token'
 
             alias =
@@ -234,7 +234,7 @@ describe 'POST /aliases/chloroform', ->
       context 'an ascii name', ->
         beforeEach (done) ->
           auth =
-            username: 'user-uuid'
+            username: '899801b3-e877-4c69-93db-89bd9787ceea'
             password: 'user-token'
 
           alias =
@@ -257,12 +257,12 @@ describe 'POST /aliases/chloroform', ->
   context 'when a different user', ->
     context 'when the alias exists', ->
       beforeEach (done) ->
-        @datastore.insert name: 'poor-trunk-ventilation', uuid: '21560426-7338-450d-ab10-e477ef1908a6', owner: 'user-uuid', subaliases: [], (error, @alias) =>
+        @datastore.insert name: 'poor-trunk-ventilation', uuid: '21560426-7338-450d-ab10-e477ef1908a6', owner: '899801b3-e877-4c69-93db-89bd9787ceea', subaliases: [], (error, @alias) =>
           done error
 
       beforeEach (done) ->
         auth =
-          username: 'other-user-uuid'
+          username: 'd9233797-95e5-44f8-9f33-4f3af80d436d'
           password: 'other-user-token'
 
         alias =

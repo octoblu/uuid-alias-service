@@ -32,7 +32,7 @@ describe 'PATCH /aliases/poor-trunk-ventilation', ->
 
   beforeEach ->
     @whoamiHandler = @meshblu.get('/v2/whoami')
-      .reply(200, '{"uuid": "user-uuid"}')
+      .reply(200, '{"uuid": "899801b3-e877-4c69-93db-89bd9787ceea"}')
 
   beforeEach (done) ->
     @datastore = new Datastore
@@ -46,12 +46,12 @@ describe 'PATCH /aliases/poor-trunk-ventilation', ->
   context 'when the alias exists', ->
     context 'an ascii name', ->
       beforeEach (done) ->
-        @datastore.insert name: 'poor-trunk-ventilation', uuid: '21560426-7338-450d-ab10-e477ef1908a6', owner: 'user-uuid', (error, @alias) =>
+        @datastore.insert name: 'poor-trunk-ventilation', uuid: '21560426-7338-450d-ab10-e477ef1908a6', owner: '899801b3-e877-4c69-93db-89bd9787ceea', (error, @alias) =>
           done error
 
       beforeEach (done) ->
         auth =
-          username: 'user-uuid'
+          username: '899801b3-e877-4c69-93db-89bd9787ceea'
           password: 'user-token'
 
         update =
@@ -75,16 +75,16 @@ describe 'PATCH /aliases/poor-trunk-ventilation', ->
           done error
 
       it 'should update the alias in mongo', ->
-        expect(@alias).to.contain name: 'poor-trunk-ventilation', uuid: '65255089-6ed8-4a75-853a-90825a6525c3', owner: 'user-uuid'
+        expect(@alias).to.contain name: 'poor-trunk-ventilation', uuid: '65255089-6ed8-4a75-853a-90825a6525c3', owner: '899801b3-e877-4c69-93db-89bd9787ceea'
 
     context 'a unicode name', ->
       beforeEach (done) ->
-        @datastore.insert name: '💩', uuid: '4fac613f-fea4-49b6-8c0a-715d15d21120', owner: 'user-uuid', (error, @alias) =>
+        @datastore.insert name: '💩', uuid: '4fac613f-fea4-49b6-8c0a-715d15d21120', owner: '899801b3-e877-4c69-93db-89bd9787ceea', (error, @alias) =>
           done error
 
       beforeEach (done) ->
         auth =
-          username: 'user-uuid'
+          username: '899801b3-e877-4c69-93db-89bd9787ceea'
           password: 'user-token'
 
         update =
@@ -110,12 +110,12 @@ describe 'PATCH /aliases/poor-trunk-ventilation', ->
           done error
 
       it 'should update the alias in mongo', ->
-        expect(@alias).to.contain name: '💩', uuid: '65255089-6ed8-4a75-853a-90825a6525c3', owner: 'user-uuid'
+        expect(@alias).to.contain name: '💩', uuid: '65255089-6ed8-4a75-853a-90825a6525c3', owner: '899801b3-e877-4c69-93db-89bd9787ceea'
 
   context 'when the alias does not exists', ->
     beforeEach (done) ->
       auth =
-        username: 'user-uuid'
+        username: '899801b3-e877-4c69-93db-89bd9787ceea'
         password: 'user-token'
 
       options =
@@ -137,12 +137,12 @@ describe 'PATCH /aliases/poor-trunk-ventilation', ->
   context 'when a different user', ->
     context 'when the alias exists', ->
       beforeEach (done) ->
-        @datastore.insert name: 'poor-trunk-ventilation', uuid: '21560426-7338-450d-ab10-e477ef1908a6', owner: 'user-uuid', (error, @alias) =>
+        @datastore.insert name: 'poor-trunk-ventilation', uuid: '21560426-7338-450d-ab10-e477ef1908a6', owner: '899801b3-e877-4c69-93db-89bd9787ceea', (error, @alias) =>
           done error
 
       beforeEach (done) ->
         auth =
-          username: 'other-user-uuid'
+          username: 'd9233797-95e5-44f8-9f33-4f3af80d436d'
           password: 'other-user-token'
 
         update =
