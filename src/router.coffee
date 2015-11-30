@@ -1,4 +1,4 @@
-AliasController = require '../controllers/alias-controller'
+AliasController = require './controllers/alias-controller'
 
 class Router
   constructor: ({mongoDbUri}) ->
@@ -6,6 +6,7 @@ class Router
 
   route: (app) =>
     app.post '/aliases', @aliasController.create
+    app.post '/aliases/:alias', @aliasController.createSubAlias
     app.get '/aliases/:name', @aliasController.find
     app.delete '/aliases/:name', @aliasController.delete
     app.patch '/aliases/:name', @aliasController.update
