@@ -1,7 +1,7 @@
 http    = require 'http'
 request = require 'request'
 shmock  = require 'shmock'
-Server  = require '../../src/server'
+Server  = require '../../../src/server'
 mongojs = require 'mongojs'
 Datastore = require 'meshblu-core-datastore'
 

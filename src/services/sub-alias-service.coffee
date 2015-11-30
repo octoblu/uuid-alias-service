@@ -24,7 +24,41 @@ class SubAliasService
             name: name
             uuid: uuid
 
-      @datastore.update name: alias, update, (error, response) =>
+      @datastore.update name: alias, update, (error) =>
+        return callback error if error?
+        callback()
+
+  delete: ({alias,name,owner}, callback) =>
+    @datastore.findOne name: alias, (error, response) =>
+      return callback error if error?
+      return callback @userError 404, http.STATUS_CODES[404] if _.isEmpty response
+      return callback @userError 403, http.STATUS_CODES[403] unless response.owner == owner
+
+      update =
+        $pullAll:
+          subaliases: {name}
+
+      @datastore.update name: alias, update, (error) =>
+        return callback error if error?
+        callback()
+
+  update: ({alias,name,owner}, {uuid}, callback) =>
+    return callback @userError 422 unless @_valid {name,uuid,owner}
+
+    query =
+      name: alias
+      'subaliases.name': name
+
+    @datastore.findOne query, (error, response) =>
+      return callback error if error?
+      return callback @userError 404, http.STATUS_CODES[404] if _.isEmpty response
+      return callback @userError 403, http.STATUS_CODES[403] unless response.owner == owner
+
+      update =
+        $set:
+          'subaliases.$.uuid': uuid
+
+      @datastore.update query, update, (error) =>
         return callback error if error?
         callback()
 

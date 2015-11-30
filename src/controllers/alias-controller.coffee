@@ -17,18 +17,35 @@ class AliasController
   delete: (req, res) =>
     {name} = req.params
     owner = req.meshbluAuth.uuid
-    @aliasService.delete {name,owner}, (error) =>
+
+    onDelete = (error) =>
       return res.status(error.status).send error.messsage if error?.status?
       return res.status(500).send error.message if error?
       res.status(204).end()
 
+    if req.query.name
+      alias = name
+      {name} = req.query
+      @subAliasService.delete {alias,name,owner}, onDelete
+    else
+      @aliasService.delete {name,owner}, onDelete
+
   update: (req, res) =>
     {name} = req.params
     owner = req.meshbluAuth.uuid
-    @aliasService.update {name,owner}, uuid: req.body.uuid, (error) =>
+    {uuid} = req.body
+
+    onUpdate = (error) =>
       return res.status(error.status).send error.messsage if error?.status?
       return res.status(500).send error.messsage if error?
       res.status(204).end()
+
+    if req.query.name
+      alias = name
+      {name} = req.query
+      @subAliasService.update {alias,name,owner}, {uuid}, onUpdate
+    else
+      @aliasService.update {name,owner}, {uuid}, onUpdate
 
   create: (req, res) =>
     {name, uuid} = req.body
