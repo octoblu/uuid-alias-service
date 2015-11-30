@@ -1,7 +1,13 @@
+AliasController = require '../controllers/alias-controller'
+
 class Router
-  constructor: (options) ->
+  constructor: ({mongoDbUri}) ->
+    @aliasController = new AliasController {mongoDbUri}
 
   route: (app) =>
-    # e.g. app.put '/resource/:id', someController.update
+    app.post '/aliases', @aliasController.create
+    app.get '/aliases/:name', @aliasController.find
+    app.delete '/aliases/:name', @aliasController.delete
+    app.patch '/aliases/:name', @aliasController.update
 
 module.exports = Router
