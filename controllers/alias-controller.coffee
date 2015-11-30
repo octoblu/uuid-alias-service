@@ -22,10 +22,15 @@ class AliasController
 
   delete: (req, res) =>
     {name} = req.params
+    owner = req.meshbluAuth.uuid
     @datastore.findOne {name}, (error, alias) =>
       return res.send(error.messsage).status(500) if error?
       if _.isEmpty alias
         res.status(404).end()
+        return
+
+      if alias.owner != owner
+        res.status(403).end()
         return
 
       @datastore.remove {name}, (error, alias) =>
@@ -34,22 +39,28 @@ class AliasController
 
   update: (req, res) =>
     {name} = req.params
+    owner = req.meshbluAuth.uuid
     @datastore.findOne {name}, (error, alias) =>
       return res.send(error.messsage).status(500) if error?
       if _.isEmpty alias
         res.status(404).end()
         return
 
+      if alias.owner != owner
+        res.status(403).end()
+        return
+
       {uuid} = req.body
       update =
         $set: {uuid}
-        
+
       @datastore.update {name}, update, (error, alias) =>
         return res.send(error.messsage).status(500) if error?
         res.status(204).end()
 
   create: (req, res) =>
     {name, uuid} = req.body
+    owner = req.meshbluAuth.uuid
 
     if _.isEmpty(name) || _.isEmpty(uuid)
       res.status(422).end()
@@ -63,7 +74,7 @@ class AliasController
       res.status(422).end()
       return
 
-    @datastore.insert {name, uuid}, (error) =>
+    @datastore.insert {name, uuid, owner}, (error) =>
       return res.send(error.messsage).status(500) if error?
       res.status(201).end()
 

@@ -46,7 +46,7 @@ describe 'GET /aliases/poor-trunk-ventilation', ->
   context 'when the alias exists', ->
     context 'an ascii name', ->
       beforeEach (done) ->
-        @datastore.insert name: 'poor-trunk-ventilation', uuid: '21560426-7338-450d-ab10-e477ef1908a6', (error, @alias) =>
+        @datastore.insert name: 'poor-trunk-ventilation', uuid: '21560426-7338-450d-ab10-e477ef1908a6', owner: 'user-uuid', (error, @alias) =>
           done error
 
       beforeEach (done) ->
@@ -68,11 +68,11 @@ describe 'GET /aliases/poor-trunk-ventilation', ->
         expect(@response.statusCode).to.equal 200
 
       it 'return an alias', ->
-        expect(@body).to.contain name: 'poor-trunk-ventilation', uuid: '21560426-7338-450d-ab10-e477ef1908a6'
+        expect(@body).to.contain name: 'poor-trunk-ventilation', uuid: '21560426-7338-450d-ab10-e477ef1908a6', owner: 'user-uuid'
 
     context 'a unicode name', ->
       beforeEach (done) ->
-        @datastore.insert name: '💩', uuid: '4fac613f-fea4-49b6-8c0a-715d15d21120', (error, @alias) =>
+        @datastore.insert name: '💩', uuid: '4fac613f-fea4-49b6-8c0a-715d15d21120', owner: 'user-uuid', (error, @alias) =>
           done error
 
       beforeEach (done) ->
@@ -96,7 +96,7 @@ describe 'GET /aliases/poor-trunk-ventilation', ->
         expect(@response.statusCode).to.equal 200
 
       it 'return an alias', ->
-        expect(@body).to.contain name: '💩', uuid: '4fac613f-fea4-49b6-8c0a-715d15d21120'
+        expect(@body).to.contain name: '💩', uuid: '4fac613f-fea4-49b6-8c0a-715d15d21120', owner: 'user-uuid'
 
   context 'when the alias does not exists', ->
     beforeEach (done) ->

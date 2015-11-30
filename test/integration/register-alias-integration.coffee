@@ -71,7 +71,7 @@ describe 'POST /aliases', ->
         expect(@response.statusCode).to.equal 201
 
       it 'create an alias in mongo', ->
-        expect(@alias).to.contain name: 'premature-burial', uuid: 'b38d4757-6f91-4aee-8ffb-ff53abc796a2'
+        expect(@alias).to.contain name: 'premature-burial', uuid: 'b38d4757-6f91-4aee-8ffb-ff53abc796a2', owner: 'user-uuid'
 
     context 'a unicode name', ->
       beforeEach (done) ->
@@ -101,7 +101,7 @@ describe 'POST /aliases', ->
         expect(@response.statusCode).to.equal 201
 
       it 'create an alias in mongo', ->
-        expect(@alias).to.contain name: '☃', uuid: 'b38d4757-6f91-4aee-8ffb-ff53abc796a2'
+        expect(@alias).to.contain name: '☃', uuid: 'b38d4757-6f91-4aee-8ffb-ff53abc796a2', owner: 'user-uuid'
 
   context 'when given an invalid alias', ->
     context 'when given a UUID as a name', ->

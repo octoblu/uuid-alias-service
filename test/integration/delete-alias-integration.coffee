@@ -46,7 +46,7 @@ describe 'DELETE /aliases/poor-trunk-ventilation', ->
   context 'when the alias exists', ->
     context 'an ascii name', ->
       beforeEach (done) ->
-        @datastore.insert name: 'poor-trunk-ventilation', uuid: '21560426-7338-450d-ab10-e477ef1908a6', (error, @alias) =>
+        @datastore.insert name: 'poor-trunk-ventilation', uuid: '21560426-7338-450d-ab10-e477ef1908a6', owner: 'user-uuid', (error, @alias) =>
           done error
 
       beforeEach (done) ->
@@ -76,7 +76,7 @@ describe 'DELETE /aliases/poor-trunk-ventilation', ->
 
     context 'a unicode name', ->
       beforeEach (done) ->
-        @datastore.insert name: '💩', uuid: '4fac613f-fea4-49b6-8c0a-715d15d21120', (error, @alias) =>
+        @datastore.insert name: '💩', uuid: '4fac613f-fea4-49b6-8c0a-715d15d21120', owner: 'user-uuid', (error, @alias) =>
           done error
 
       beforeEach (done) ->
@@ -127,3 +127,34 @@ describe 'DELETE /aliases/poor-trunk-ventilation', ->
 
     it 'should not return an alias', ->
       expect(@body).to.be.undefined
+
+  context 'when a different user', ->
+    context 'when the alias exists', ->
+      beforeEach (done) ->
+        @datastore.insert name: 'poor-trunk-ventilation', uuid: '21560426-7338-450d-ab10-e477ef1908a6', owner: 'user-uuid', (error, @alias) =>
+          done error
+
+      beforeEach (done) ->
+        auth =
+          username: 'other-user-uuid'
+          password: 'other-user-token'
+
+        options =
+          auth: auth
+          json: true
+
+        request.del "http://localhost:#{@serverPort}/aliases/poor-trunk-ventilation", options, (error, @response, @body) =>
+          done error
+
+      it 'should authenticate with meshblu', ->
+        expect(@whoamiHandler.isDone).to.be.true
+
+      it 'should respond with 403', ->
+        expect(@response.statusCode).to.equal 403
+
+      beforeEach (done) ->
+        @datastore.findOne name: 'poor-trunk-ventilation', (error, @alias) =>
+          done error
+
+      it 'should not delete the record in mongo', ->
+        expect(@alias).to.contain name: 'poor-trunk-ventilation', uuid: '21560426-7338-450d-ab10-e477ef1908a6'
